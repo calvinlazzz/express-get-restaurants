@@ -2,35 +2,11 @@ const express = require("express");
 const app = express();
 const Restaurant = require("../models/index")
 const db = require("../db/connection");
+const router = require('../routes/restaurants');
 
 //TODO: Create your GET Request Route Below: 
-app.get("/restaurants", async (req, res) => {
-    const restaurants = await Restaurant.findAll();
-    res.json(restaurants);
-});
+app.use('/restaurants', router);
 
-app.get("/restaurants/:id", async (req, res) => {
-    const restaurant = await Restaurant.findByPk(req.params.id);
-    res.json(restaurant);
-})
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.post("/restaurants", async (req, res) => {
-    const restaurant = await Restaurant.create(req.body);
-    res.json(restaurant);
-});
-app.put("/restaurants/:id", async (req, res) => {
-    const restaurant = await Restaurant.findByPk(req.params.id);
-    await restaurant.update(req.body);
-    res.json(restaurant);
-})
-app.delete("/restaurants/:id", async (req, res) => {
-    const restaurant = await Restaurant.findByPk(req.params.id);
-    await restaurant.destroy();
-    res.json({
-        message: `Deleted restaurant with id ${req.params.id}`
-    });
-})
 
 
 
